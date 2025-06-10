@@ -1,0 +1,7 @@
+Blog Api
+    Articles:
+        Id
+        Title
+        Content
+        Slug
+        tags
