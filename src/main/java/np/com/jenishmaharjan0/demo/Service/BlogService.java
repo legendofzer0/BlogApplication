@@ -1,7 +1,9 @@
 package np.com.jenishmaharjan0.demo.Service;
 
-import np.com.jenishmaharjan0.demo.DTO.BlogRequest;
+import np.com.jenishmaharjan0.demo.DTO.BlogCreateRequest;
 import np.com.jenishmaharjan0.demo.DTO.BlogUpdateRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -11,17 +13,20 @@ import java.util.Optional;
 
 @Service
 public class BlogService {
-    private List<BlogRequest> DATA = new ArrayList<BlogRequest>();
-    public void  create (@RequestBody BlogRequest blogRequest) {
+    private static Logger log = LoggerFactory.getLogger(BlogService.class);
+
+    private List<BlogCreateRequest> DATA = new ArrayList<BlogCreateRequest>();
+    public void  create (@RequestBody BlogCreateRequest blogRequest) {
+        log.debug("Creating blog : {}", blogRequest);
         DATA.add(blogRequest);
     }
-    public List<BlogRequest> getData () {
+    public List<BlogCreateRequest> getData () {
         return DATA;
     }
 
-    public Optional<BlogRequest> findById(Long id) {
-    Optional<BlogRequest> blogOpt = Optional.empty();
-    for(BlogRequest blog : DATA) {
+    public Optional<BlogCreateRequest> findById(Long id) {
+    Optional<BlogCreateRequest> blogOpt = Optional.empty();
+    for(BlogCreateRequest blog : DATA) {
         if(blog.getId().equals(id)) {
             blogOpt = Optional.of(blog);
         }
@@ -30,7 +35,7 @@ public class BlogService {
     }
 
     public String updateById(Long id, BlogUpdateRequest request) {
-     for(BlogRequest blog : DATA) {
+     for(BlogCreateRequest blog : DATA) {
         if(blog.getId().equals(id)) {
             blog.setTitle(request.getTitle());
             blog.setContent(request.getContent());
@@ -43,7 +48,7 @@ public class BlogService {
     }
 
     public String deleteById(Long id) {
-        List<BlogRequest> data = DATA;
+        List<BlogCreateRequest> data = DATA;
         data.removeIf(blog -> blog.getId().equals(id));
         return "Data Deleted Successfully";
     }
